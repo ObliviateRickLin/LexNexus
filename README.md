@@ -42,7 +42,7 @@
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/lexnexus.git
+   git clone https://github.com/ObliviateRickLin/LexNexus.git
    cd lexnexus
    ```
 2. Install dependencies:
@@ -113,7 +113,7 @@ This software is protected under GPL v3.0, which means:
 
 1. 克隆仓库：
    ```bash
-   git clone https://github.com/yourusername/lexnexus.git
+   git clone https://github.com/ObliviateRickLin/LexNexus.git
    cd lexnexus
    ```
 2. 安装依赖：
