@@ -6,10 +6,13 @@
 
 ## <h2 id="english">English</h2>
 
-**LexNexus** is a Chrome browser extension powered by GPT-4, designed to translate English text into a natural Chinese-English mixed format, with Chinese and English mixed in the translated text.
+**LexNexus** is a Chrome browser extension powered by Large Language Models (LLMs), designed to translate English text into a natural Chinese-English mixed format, with Chinese and English mixed in the translated text.
 
 ### ✨ Features
 
+- **Multiple LLM Support**:
+  - Currently supports OpenAI GPT-4 and DeepSeek
+  - Easily extensible architecture for future LLM integrations
 - **Smart Mixed Translation**: Intelligently preserves key English terms while integrating the Chinese context.
 - **Elegant UI/UX**:
   - Beautiful popup interface with dynamic animations.
@@ -20,14 +23,18 @@
   - Results appear directly on the webpage.
   - Floating reference window with original text.
 - **Customization**:
-  - Personal OpenAI API key configuration.
-  - Secure local storage of settings.
-  - Flexible translation style powered by GPT-4.
+  - Flexible choice of LLM providers
+  - Personal API key configuration for different providers
+  - Secure local storage of settings
+  - Customizable translation style based on selected LLM
 
 ### 🛠️ Tech Stack
 
 - **Vue.js 3**: For modern reactive UI.
-- **OpenAI GPT-4 API**: For intelligent translation.
+- **LLM Integration**:
+  - OpenAI GPT-4o-mini API
+  - DeepSeek API
+  - Extensible API architecture
 - **Chrome Extension APIs**: For seamless browser integration.
 - **Vite**: For fast development and building.
 
@@ -53,7 +60,8 @@
    - Select the `dist` folder.
 5. Configure:
    - Click the LexNexus icon.
-   - Enter your OpenAI API key.
+   - Choose your preferred LLM provider.
+   - Enter corresponding API credentials.
    - Start translating!
 
 ### 📝 License
@@ -69,11 +77,14 @@ This software is protected under GPL v3.0, which means:
 
 ## <h2 id="chinese">中文</h2>
 
-**LexNexus** 是一款由 GPT-4 驱动的 Chrome 浏览器扩展，旨在将英文文本翻译成自然的中英混合格式，用中英夹杂的形式来翻译你选中的文本。
+**LexNexus** 是一款由大语言模型（LLM）驱动的 Chrome 浏览器扩展，旨在将英文文本翻译成自然的中英混合格式，用中英夹杂的形式来翻译你选中的文本。
 
 ### ✨ 特点
 
-- **智能混合翻译**：在整合中文语境的同时，智能保留关键英文术语。
+- **多语言模型支持**：
+  - 目前支持 OpenAI GPT-4 和 DeepSeek
+  - 易扩展的架构设计，支持未来集成更多语言模型
+- **智能混合翻译**：在整合中文语境的同时，智能保留关键英文术语
 - **优雅的用户界面/用户体验**：
   - 美观的弹出界面，配有动态动画。
   - 平滑的逐词翻译动画。
@@ -83,14 +94,18 @@ This software is protected under GPL v3.0, which means:
   - 结果直接显示在网页上。
   - 带有原文的浮动参考窗口。
 - **个性化定制**：
-  - 个人 OpenAI API 密钥配置。
-  - 安全的本地设置存储。
-  - 由 GPT-4 提供支持的灵活翻译风格。
+  - 灵活选择语言模型提供商
+  - 支持不同提供商的个人 API 密钥配置
+  - 安全的本地设置存储
+  - 基于所选语言模型的自定义翻译风格
 
 ### 🛠️ 技术栈
 
 - **Vue.js 3**：用于现代反应式用户界面。
-- **OpenAI GPT-4 API**：提供智能翻译。
+- **语言模型集成**：
+  - OpenAI GPT-4o-mini API
+  - DeepSeek API
+  - 可扩展的 API 架构
 - **Chrome 扩展 API**：实现浏览器的无缝整合。
 - **Vite**：快速开发和构建。
 
@@ -116,7 +131,8 @@ This software is protected under GPL v3.0, which means:
    - 选择 `dist` 文件夹。
 5. 配置使用：
    - 点击 LexNexus 图标。
-   - 输入你的 OpenAI API 密钥。
+   - 选择你偏好的语言模型提供商。
+   - 输入相应的 API 凭证。
    - 开始翻译！
 
 ### 📝 许可证

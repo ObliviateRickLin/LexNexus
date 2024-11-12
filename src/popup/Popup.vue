@@ -14,6 +14,24 @@
           <p class="description">Enter your OpenAI API key to start experiencing seamless bilingual translation.</p>
           
           <div class="input-group">
+            <label>Model Selection</label>
+            <div class="model-selector">
+              <div 
+                v-for="model in models" 
+                :key="model.id"
+                class="model-option"
+                :class="{ active: selectedModel === model.id }"
+                @click="selectedModel = model.id"
+              >
+                <div class="model-info">
+                  <span class="model-name">{{ model.name }}</span>
+                  <span class="model-description">{{ model.description }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="input-group">
             <label for="apiKey">API Key</label>
             <div class="input-wrapper">
               <input 
@@ -83,7 +101,22 @@ const hasApiKey = ref(false)
 const isLoading = ref(false)
 const inputFocused = ref(false)
 
-// 定义吐槽短句数组
+const models = [
+  {
+    id: 'gpt4',
+    name: 'OpenAI',
+    description: 'GPT-4o-mini'
+  },
+  {
+    id: 'deepseek',
+    name: 'DeepSeek',
+    description: 'v2.5'
+  }
+]
+
+const selectedModel = ref('gpt4')
+
+// 先定义 quotes 数组
 const quotes = [
   {
     parts: [
@@ -125,6 +158,7 @@ const quotes = [
   }
 ]
 
+// 然后再使用 quotes
 const currentQuote = ref(quotes[0])
 
 // 随机切换短句
@@ -148,10 +182,11 @@ onMounted(() => {
 
 onMounted(async () => {
   try {
-    const result = await chrome.storage.local.get(['openaiApiKey'])
+    const result = await chrome.storage.local.get(['openaiApiKey', 'selectedModel'])
     hasApiKey.value = !!result.openaiApiKey
+    selectedModel.value = result.selectedModel || 'gpt4'
   } catch (error) {
-    console.error('Error loading API key:', error)
+    console.error('Error loading settings:', error)
   }
 })
 
@@ -159,13 +194,15 @@ const saveApiKey = async () => {
   if (apiKey.value) {
     try {
       isLoading.value = true
-      await chrome.storage.local.set({ openaiApiKey: apiKey.value })
+      await chrome.storage.local.set({ 
+        openaiApiKey: apiKey.value,
+        selectedModel: selectedModel.value
+      })
       hasApiKey.value = true
       apiKey.value = ''
-      // 显示成功提示
-      showToast('API key saved successfully!')
+      showToast('Settings saved successfully!')
     } catch (error) {
-      showToast('Failed to save API key', 'error')
+      showToast('Failed to save settings', 'error')
     } finally {
       isLoading.value = false
     }
@@ -533,6 +570,47 @@ input:focus {
 }
 
 .hint-text {
+  color: #6b7280;
+}
+
+.model-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.model-option {
+  padding: 12px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.model-option:hover {
+  border-color: #93c5fd;
+  background: #f8fafc;
+}
+
+.model-option.active {
+  border-color: #2563eb;
+  background: #eff6ff;
+}
+
+.model-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.model-name {
+  font-weight: 500;
+  color: #1f2937;
+}
+
+.model-description {
+  font-size: 12px;
   color: #6b7280;
 }
 </style> 

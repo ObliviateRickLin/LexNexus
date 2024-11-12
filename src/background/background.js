@@ -7,34 +7,41 @@ chrome.runtime.onInstalled.addListener(() => {
   })
 })
 
-// 调用 OpenAI API 进行翻译
+// 调用 API 进行翻译
 async function translateText(text) {
   try {
-    // 获取存储的 API key
-    const { openaiApiKey } = await chrome.storage.local.get(['openaiApiKey'])
+    // 获取存储的设置
+    const { openaiApiKey, selectedModel } = await chrome.storage.local.get(['openaiApiKey', 'selectedModel'])
     if (!openaiApiKey) {
-      throw new Error('API key not found. Please set your OpenAI API key in the extension options.')
+      throw new Error('API key not found. Please set your API key in the extension options.')
     }
 
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    // 根据选择的模型使用不同的 API 端点
+    const apiEndpoint = selectedModel === 'deepseek' 
+      ? 'https://api.deepseek.com/v1/chat/completions'
+      : 'https://api.openai.com/v1/chat/completions'
+
+    // 使用相同的请求格式（因为 DeepSeek API 兼容 OpenAI API）
+    const response = await fetch(apiEndpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${openaiApiKey}`
       },
       body: JSON.stringify({
-        model: "gpt-4o-mini",
+        model: selectedModel === 'deepseek' ? "deepseek-chat" : "gpt-4o-mini",
         messages: [
           {
             role: "system",
             content: `你是一个专业的有着在中国和美国生活多年经验的跨文化者。你正在帮助你的朋友学习语言。你需要将输入的英文文本翻译成中英混合的形式，遵循以下规则：
             1. 保持专业术语、重要概念、品牌名称等语言不变。
-            2. 将普通词汇、语法结构等翻译成另一种语言，尤其是动词和形容词部分，还有逻辑词组
-            3. 确保翻译自然流畅，中英混合要符合阅读习惯
-            4. 对于专业领域的词汇，优先保持英文
-            5. 保持原文的语气和语调 
-            6. 确保中英文之间的过渡自然
-            7. 有创意！！！But be native and natural.
+            2. 保持原文当中较为困难，有学习价值的单词或者词组不变，尤其是形容词和动词词组
+            3. 将普通词汇、语法结构等翻译成另一种语言，尤其是动词和形容词部分，还有逻辑词组
+            4. 确保翻译自然流畅，中英混合要符合阅读习惯
+            5. 对于专业领域的词汇，优先保持英文
+            6. 保持原文的语气和语调 
+            7. 确保中英文之间的过渡自然
+            8. 有创意！！！But be native and natural.
 
             示例：
             输入: "The new machine learning algorithm achieves state-of-the-art performance on various benchmark datasets."
@@ -54,7 +61,7 @@ async function translateText(text) {
     })
 
     if (!response.ok) {
-      throw new Error('Translation API request failed')
+      throw new Error(`${selectedModel === 'deepseek' ? 'DeepSeek' : 'OpenAI'} API request failed`)
     }
 
     const data = await response.json()
