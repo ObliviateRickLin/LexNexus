@@ -1,5 +1,7 @@
 # LexNexus - AI Mixed Translation Browser Extension
 
+![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)
+
 [English Version](#english) | [中文版本](#chinese)
 
 ## <h2 id="english">English</h2>
